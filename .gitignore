@@ -3,3 +3,6 @@ _build
 
 # Ignore dependencies
 deps
+
+# Ignore node_modules
+assets/node_modules

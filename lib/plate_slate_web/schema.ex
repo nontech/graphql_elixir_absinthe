@@ -9,11 +9,28 @@
 defmodule PlateSlateWeb.Schema do
   use Absinthe.Schema
 
+  alias PlateSlate.{Menu, Repo}
+
+  # Absinthe predefined custom scalars
+  import_types Absinthe.Type.Custom
+
   query do
-    # <<Ignore this for now>>
+
+    @desc "The list of avilable items on the menu"
+    field :menu_items, list_of(:menu_item) do
+      resolve fn _,_,_ ->
+        {:ok, Repo.all(Menu.Item)}
+      end
+    end
   end
 
+  @desc "Describes a single item on the menu"
   object :menu_item do
-    # <<We'll add fields soon>>
+    field :id, :id
+    field :name, :string
+    field :description, :string
+    field :price, :decimal
+    @desc "Date on which the item was added to the menu"
+    field :added_on, :date
   end
 end
